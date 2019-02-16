@@ -1,4 +1,4 @@
-# ScriptableObjects-based game architectural scaffolding for Unity3D
+# ScriptableObjects-based game architectural scaffolding for Unity3D game development
 ### Inspired by: [Unite Austin 2017 - Game Architecture with Scriptable Objects](https://www.youtube.com/watch?v=raQ3iHhE_Kk)
 ---
 **State:** Work in progress, but fully usable; not unit-tested, but master should be stable.
