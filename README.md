@@ -1,9 +1,9 @@
 # ScriptableObjects-based game architectural scaffolding for Unity3D
 ### Inspired by: [Unite Austin 2017 - Game Architecture with Scriptable Objects](https://www.youtube.com/watch?v=raQ3iHhE_Kk)
 ---
-**State:** work in progress, but fully usable; not unit-tested, but master should be stable
+**State:** Work in progress, but fully usable; not unit-tested, but master should be stable.
 
-**Requirements:** Tested in Unity 2018.3, requires scripting runtime set to '.Net 4.x equivalent' (uses C# 7 features)
+**Requirements:** Tested in Unity 2018.3, requires scripting runtime set to '.Net 4.x equivalent' (uses C# 7 features).
 
 ---
 
