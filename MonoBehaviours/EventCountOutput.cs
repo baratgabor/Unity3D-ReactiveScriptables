@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace LeakyAbstraction.ReactiveScriptables
 {
-    public class EventCounter : SubscriptionHelperMonoBehaviour
+    public class EventCountOutput : SubscriptionHelperMonoBehaviour
     {
         [SerializeField]
         private GameEvent _gameEvent = default;
@@ -11,22 +11,18 @@ namespace LeakyAbstraction.ReactiveScriptables
         [SerializeField]
         private IntProperty_Writeable _countOutput = default;
 
-        private int _score = 0;
+        private int _counter = 0;
 
         void Start()
         {
             if (_gameEvent == null || _countOutput == null)
                 throw new Exception("Depencencies not set.");
 
-            AddSubscription(_gameEvent, Increment);
-
             _countOutput.Set(0);
+            AddSubscription(_gameEvent, Increment);
         }
 
-        private void Increment(GameEvent sender)
-        {
-            _score++;
-            _countOutput.Set(_score);
-        }
+        private void Increment(GameEvent _)
+           => _countOutput.Set(++_counter);
     }
 }
