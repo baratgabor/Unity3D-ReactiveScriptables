@@ -1,18 +1,31 @@
 # ScriptableObjects-based game architectural scaffolding for Unity3D
-**State: work in progress, but fully usable**
+### Inspired by: [Unite Austin 2017 - Game Architecture with Scriptable Objects](https://www.youtube.com/watch?v=raQ3iHhE_Kk)
+---
+**State:** work in progress, but fully usable
 
-**Version information: Tested in Unity 2018.3, requires scripting runtime set to '.Net 4.x equivalent' (uses C# 7 features)**
+**Requirements:** Tested in Unity 2018.3, requires scripting runtime set to '.Net 4.x equivalent' (uses C# 7 features)
+
+---
 
 **Readme is under construction; will take some time ;)**
 
+Essentially this is an adapted/extended version of the ScriptableObject-based architectural approach introduced in the Unite talk linked above.
 
-Essentially this is my adaptation (and extension) of the ScriptableObject-based architectural approach introduced in this Unite-talk:
+I will try to show with some example scenarios and pictures why I think this architecture works pretty well for a lot of common problems.
 
-### [ - YouTube: Unite Austin 2017 - Game Architecture with Scriptable Objects](https://www.youtube.com/watch?v=raQ3iHhE_Kk)
+*(FYI the naming is a real struggle for me here. I spent literally like 2 days thinking about how to call this module, plus how to call the state holding class, etc. I didn't like the original GameVariable name, and I wanted to differentiate its use from the normal variables/fields we use (that's why I also went with `Get()` and `Set()` instead of property accessors). So it's entirely possible that I'll rename a bunch of things.)*
 
-I don't claim that this architecture is universally applicable to all problems; I'd say it's mostly suitable for smaller games, and it might be even seen as an anti-pattern from a strict SOLID/OOP standpoint. But our toolset is quite limited in Unity, and it's extremely easy to work with this approach, plus it seems to promote a generally positive, more loosely coupled design compared to the direct referencing between components you can often see in Unity3D projects.
+### Suitable for:
 
-FYI the naming is a real struggle for me here. I spent literally like 2 days thinking about how to call this module, plus how to call the state holding class, etc. I didn't like the original GameVariable name, and I wanted to differentiate its use from the normal variables/fields we use (that's why I also went with `Get()` and `Set()` instead of property accessors). So it's entirely possible that I'll rename a bunch of things.
+  - Injecting pre-defined state or configuration into `MonoBehaviour` components.
+  - Exchanging pre-defined types of data between `MonoBehaviour` components, either through polling or notifications, without creating hard references between them.
+  - Creating reactive, or event-driven, workflow between components with events and change notifications. (But for now don't expect real reactive features, like map, filter, etc. ;))
+  - Driving GUI behaviour and interactivity.
+
+### Probably not suitable for:
+
+  - Highly complex games, because the data types are really fine-grained, and if you need to create hundreds of them, that would probably get messy. However, you can easily extend this system with your own, less fine grained types.
+  - Scenarios where you need to create and propagate state dynamically, since this is all about using pre-defined `ScriptableObject` instances. Of course in a lot of cases what you actually need is to hook the components onto a communication channel, and these channels are usually pre-definable.
 
 ## Main Features
 
