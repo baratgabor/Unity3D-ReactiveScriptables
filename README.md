@@ -13,7 +13,7 @@ Essentially this is an adapted/extended version of the ScriptableObject-based ar
 
 I will try to show with some example scenarios and pictures why I think this architecture works pretty well for a lot of common problems.
 
-This is used as a Git submodule in my project; in 2-3 classes I still need to work out some solution to a few dependencies on my sound and animation manager (notably in [Interactible.cs](https://github.com/baratgabor/Unity3D-ReactiveScriptables/blob/master/MonoBehaviours/GUI/Interactable.cs)). However, you can actually find the [SoundManager here on GitHub](https://github.com/baratgabor/Unity3D-SoundManager).
+This is used as a Git submodule in my project; in 2-3 classes I still need to work out some solution to a few dependencies on my sound and animation manager (notably in [Interactable.cs](https://github.com/baratgabor/Unity3D-ReactiveScriptables/blob/master/MonoBehaviours/GUI/Interactable.cs)). However, you can actually find the [SoundManager here on GitHub](https://github.com/baratgabor/Unity3D-SoundManager).
 
 *(FYI the naming is a real struggle for me here. I spent literally like 2 days thinking about how to call this module, plus how to call the state holding class, etc. I didn't like the original GameVariable name, and I wanted to differentiate its use from the normal variables/fields we use (that's why I also went with `Get()` and `Set()` instead of property accessors). So it's entirely possible that I'll rename a bunch of things.)*
 
