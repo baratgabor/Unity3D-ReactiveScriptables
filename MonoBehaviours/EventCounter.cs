@@ -9,7 +9,7 @@ namespace LeakyAbstraction.ReactiveScriptables
         private GameEvent _gameEvent = default;
 
         [SerializeField]
-        private IntState_Writeable _countOutput = default;
+        private IntProperty_Writeable _countOutput = default;
 
         private int _score = 0;
 

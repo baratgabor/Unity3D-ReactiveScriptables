@@ -14,7 +14,7 @@ namespace LeakyAbstraction.ReactiveScriptables
 
         [Header("Source settings:")]
         [SerializeField]
-        private FloatState _modulationSource = default;
+        private FloatProperty _modulationSource = default;
         [SerializeField]
         private float _sourceRangeStart = default;
         [SerializeField]

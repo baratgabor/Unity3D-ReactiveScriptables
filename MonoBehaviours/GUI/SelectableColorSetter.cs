@@ -8,7 +8,7 @@ namespace LeakyAbstraction.ReactiveScriptables
     public class SelectableColorSetter : MonoBehaviour
     {
         [SerializeField]
-        private ColorState _colorVariable = default;
+        private ColorProperty _colorVariable = default;
 
         [SerializeField]
         private ColorTransformation _normalColorSetter = new ColorTransformation();

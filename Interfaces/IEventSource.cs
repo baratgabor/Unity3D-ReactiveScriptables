@@ -3,7 +3,7 @@
 namespace LeakyAbstraction.ReactiveScriptables
 {
     /// <summary>
-    /// Facilitates the unified handling of GameEvent<T> and GameState<T> objects.
+    /// Facilitates the unified handling of GameEvent<T> and GameProperty<T> objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IEventSource<T>

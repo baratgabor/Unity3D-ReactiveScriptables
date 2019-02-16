@@ -6,7 +6,7 @@ namespace LeakyAbstraction.ReactiveScriptables
     public class CameraFrustumTracker : MonoBehaviour
     {
         [SerializeField]
-        private BoundsState_Writeable _cameraBoundsOutput = default;
+        private BoundsProperty_Writeable _cameraBoundsOutput = default;
 
         private Camera _camera;
         private Bounds _previousbounds = default;

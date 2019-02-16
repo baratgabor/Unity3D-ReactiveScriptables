@@ -6,7 +6,7 @@ namespace LeakyAbstraction.ReactiveScriptables
     public class SpriteSizeSetter : MonoBehaviour
     {
         [SerializeField]
-        private BoundsState _cameraBounds = default;
+        private BoundsProperty _cameraBounds = default;
         private SpriteRenderer _spriteRenderer;
 
         private void Awake()

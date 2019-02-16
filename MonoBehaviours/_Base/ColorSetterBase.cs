@@ -40,7 +40,7 @@ namespace LeakyAbstraction.ReactiveScriptables
         where T : UnityEngine.Object
     {
         [SerializeField]
-        private ColorState _colorVariable = default;
+        private ColorProperty _colorVariable = default;
 
         [SerializeField]
         private ColorTransformation _colorTransformation = new ColorTransformation();
