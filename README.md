@@ -38,6 +38,7 @@ I will try to show with some example scenarios and pictures why I think this arc
     
 ### Built-in change notifiations
   - Not just the event classes, but the state-holding classes have an event too that notifies of state changes.
+  - Works sort of similarly to the `INotifyPropertyChanged` interface in .Net, in the sense that you can listen to the changes of your data and react in an event-driven way.
 
 ### Easily extendable generic base classes
   - The common types, e.g. `float`, `int`, `Vector3`, `Bounds` already have built-in concrete classes, but you can also create your own classes, including ones based on your custom types. Basically this is all you need to create a concrete type that you can use in the Editor (as we know, the Editor doesn't support generics, so you need to create non-generic derived classes):
