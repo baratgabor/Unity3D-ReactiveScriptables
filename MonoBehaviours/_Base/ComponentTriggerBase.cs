@@ -3,7 +3,7 @@ using System;
 
 namespace LeakyAbstraction.ReactiveScriptables
 {
-    public abstract class ComponentTriggerBase<T> : MonoBehaviour
+    public abstract class ComponentTriggerBase<T> : SubscriptionHelperMonoBehaviour
 where T : Component
     {
         [SerializeField]
@@ -23,18 +23,8 @@ where T : Component
 
             if (_event == null)
                 Debug.LogWarning("No GameEvent set. This event trigger will never trigger.");
-        }
 
-        private void OnEnable()
-        {
-            if (_event != null)
-                _event.Event += OnTrigger;
-        }
-
-        private void OnDisable()
-        {
-            if (_event != null)
-                _event.Event -= OnTrigger;
+            AddSubscription(_event, OnTrigger);
         }
 
         private void OnTrigger(GameEvent sender)
