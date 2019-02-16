@@ -65,4 +65,4 @@ I will try to show with some example scenarios and pictures why I think this arc
     - **Audio playback modulation** for creating dynamic car engine, etc. sounds based on a float (e.g. speed)
   
 ### Lightweight, not too OOP
-  - Has a 2-3 levels deep inheritance hierarchy here and there, but generally it's not overstructured and overcomplicated. I'd be glad to rely more on interfaces, composition and abstractions, but sadly it seems nearly impossible in Unity.
+  - Has a 2-3 levels deep inheritance hierarchy here and there, but generally it's not overstructured and overcomplicated. I'd be glad to rely more on interfaces, composition and abstractions, but sadly it seems nearly impossible in Unity (if you want to keep things Editor-compatible).
