@@ -19,7 +19,7 @@ This is used as a Git submodule in my project; in 2-3 classes I still need to wo
 
 ### Suitable for:
 
-  - Injecting pre-defined state or configuration into `MonoBehaviour` components.
+  - Injecting pre-defined data or configuration into `MonoBehaviour` components.
   - Exchanging pre-defined types of data between `MonoBehaviour` components, either through polling or notifications, without creating hard references between them.
   - Creating reactive, or event-driven, workflow between components with events and change notifications. (But for now don't expect real reactive features, like map, filter, etc. ;))
   - Driving GUI behaviour and interactivity.
@@ -32,29 +32,29 @@ This is used as a Git submodule in my project; in 2-3 classes I still need to wo
 ## Main Features
 
 ### Differentiated read-only and writeable use
-  - You can create read-only and writeable instances of the state-holding classes.
-  - You can associate your writeable state classes (and invokable event classes) with readonly fields in the Editor.
+  - You can create read-only and writeable instances of the data-holding classes.
+  - You can associate your writeable data classes (and invokable event classes) with readonly fields in the Editor.
     - This means you can express clearly the intent that an event or data is an input of your component, and have automaticly enforced write-protection.
   - Essentially you can avoid the situation of creating mutable shared state in your architecture. Which almost always leads to problems.
     - My recommendation is that for each writeable instance you should have a single component that writes to it, and the rest should only listen.
     
 ### Built-in change notifiations
-  - Not just the event classes, but the state-holding classes have an event too that notifies of state changes.
-  - Works sort of similarly to the `INotifyPropertyChanged` interface in .Net, in the sense that you can listen to the changes of your data and react in an event-driven way.
+  - Not just the event classes, but the data-holding classes have an event too that notifies of value changes.
+  - Works sort of similarly to the `INotifyPropertyChanged` interface in .Net, in the sense that you can listen to changes related to a unit of data, and react in an event-driven manner.
 
 ### Easily extendable generic base classes
   - The common types, e.g. `float`, `int`, `Vector3`, `Bounds` already have built-in concrete classes, but you can also create your own classes, including ones based on your custom types. Basically this is all you need to create a concrete type that you can use in the Editor (as we know, the Editor doesn't support generics, so you need to create non-generic derived classes):
   
 ```csharp
     [CreateAssetMenu]
-    public class BoundsState : GameState<Bounds>
+    public class BoundsProperty : GameProperty<Bounds>
     { }
 ```
   
 ### Subscription helper MonoBehaviour extension class
   - If you derive your components from `SubscriptionHelperMonoBehaviour` instead of `MonoBehaviour`, you can add subscriptions easily by invoking the `AddSubscription()` method.
   - This automatically handles all subscription-related responsibilities, i.e. unsubscribing in `OnDisable()`, resubscribing in `OnEnable()`, and again unsubscribing in `OnDestroy()`.
-  - Supports all data types automatically, including your own custom made types which derive from `GameEvent<T>` or `GameState<T>`.
+  - Supports all data types automatically, including your own custom made types which derive from `GameEvent<T>` or `GameProperty<T>`.
   - (Still need to refactor this, because it uses closing/allocating lambdas currently.)
   
 ### Built-in, ready to use generic MonoBehaviour components
