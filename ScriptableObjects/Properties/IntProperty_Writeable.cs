@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace LeakyAbstraction.ReactiveScriptables
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Game Properties/Int Property - Writeable")]
     public class IntProperty_Writeable : IntProperty
     {
         new public void Set(int value)

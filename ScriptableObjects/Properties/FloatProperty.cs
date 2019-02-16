@@ -2,7 +2,7 @@
 
 namespace LeakyAbstraction.ReactiveScriptables
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Game Properties/Float Property")]
     public class FloatProperty : GameProperty<float>
     { }
 }

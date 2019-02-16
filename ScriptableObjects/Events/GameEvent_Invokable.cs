@@ -2,7 +2,7 @@
 
 namespace LeakyAbstraction.ReactiveScriptables
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Game Events/Game Event - Invokable")]
     public class GameEvent_Invokable : GameEvent
     {
         public void Invoke()

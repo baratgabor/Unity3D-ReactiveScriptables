@@ -2,7 +2,7 @@
 
 namespace LeakyAbstraction.ReactiveScriptables
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Game Properties/Int Property")]
     public class IntProperty : GameProperty<int>
     { }
 }

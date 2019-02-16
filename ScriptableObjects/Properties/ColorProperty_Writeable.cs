@@ -2,7 +2,7 @@
 
 namespace LeakyAbstraction.ReactiveScriptables
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Game Properties/Color Property - Writeable")]
     public class ColorProperty_Writeable : ColorProperty
     {
         new public void Set(Color value)
