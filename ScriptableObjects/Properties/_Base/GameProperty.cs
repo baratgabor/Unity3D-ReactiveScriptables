@@ -5,7 +5,7 @@ using UnityEngine;
 namespace LeakyAbstraction.ReactiveScriptables
 {
     /// <summary>
-    /// Generic base class for concrete classes that store data and provide change notifications.
+    /// Generic base class for concrete classes that store state and provide change notifications.
     /// Concrete GameProperty types has to be derived from this class, because the Unity Editor doesn't support generic classes.
     /// T is the type of the data stored, also the type of the event payload.
     /// </summary>
