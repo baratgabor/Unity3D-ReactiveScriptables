@@ -8,6 +8,8 @@ Essentially this is my adaptation (and extension) of the ScriptableObject-based 
 
 I don't claim that this architecture is universally applicable to all problems; I'd say it's mostly suitable for smaller games, and it might be even seen as an anti-pattern from a strict SOLID/OOP standpoint. But our toolset is quite limited in Unity, and it's extremely easy to work with this approach, and seems to promote a generally positive, more loosely coupled design compared to the direct referencing between components you can often see in Unity3D projects.
 
+FYI the naming is a real struggle for me here. I spent literally like 2 days thinking about how to call this module, plus how to call the state holding class, etc. I didn't like the original GameVariable name, and I wanted to differentiate its use from the normal variables/fields we use (that's why I also went with `Get()` and `Set()` instead of property accessors). So it's entirely possible that I'll rename a bunch of things.
+
 ## Main Features
 
 ### Differentiated read-only and writeable use
