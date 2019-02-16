@@ -173,9 +173,13 @@ namespace LeakyAbstraction.ReactiveScriptables
             _awaitedExecutionRunning = true;
 
             //TODO: Consider less simplistic (but similarly dependable) waiting implementations, preferably without polling
-
             if (interaction.waitForAnimation && animation != null)
-                yield return animation.WaitForFinish();
+            {
+                do
+                {
+                    yield return null;
+                } while (animation.isPlaying);
+            }
 
             if (interaction.waitForSound && audioSource != null)
                 while (audioSource.isPlaying) yield return null;
