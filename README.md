@@ -6,7 +6,7 @@ Essentially this is my adaptation (and extension) of the ScriptableObject-based 
 
 ### [ - YouTube: Unite Austin 2017 - Game Architecture with Scriptable Objects](https://www.youtube.com/watch?v=raQ3iHhE_Kk)
 
-I don't claim that this architecture is universally applicable to all problems; indeed, it might be even seen as an anti-pattern from a strict SOLID/OOP standpoint. But our toolset is quite limited in Unity, and it's extremely easy to work with this approach, and seems to promote a generally positive, more loosely coupled design compared to the direct referencing between components you can often see in Unity3D projects.
+I don't claim that this architecture is universally applicable to all problems; I'd say it's mostly suitable for smaller games, and it might be even seen as an anti-pattern from a strict SOLID/OOP standpoint. But our toolset is quite limited in Unity, and it's extremely easy to work with this approach, and seems to promote a generally positive, more loosely coupled design compared to the direct referencing between components you can often see in Unity3D projects.
 
 ## Main Features
 
