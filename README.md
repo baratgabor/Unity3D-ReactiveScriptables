@@ -1,6 +1,10 @@
 # ScriptableObjects-based game architectural scaffolding for Unity3D
+**State: work in progress, but fully usable**
 
-**- Readme is under construction; will take some time ;) -**
+**Version information: Tested in Unity 2018.3, requires scripting runtime set to '.Net 4.x equivalent' (uses C# 7 features)**
+
+**Readme is under construction; will take some time ;)**
+
 
 Essentially this is my adaptation (and extension) of the ScriptableObject-based architectural approach introduced in this Unite-talk:
 
@@ -35,6 +39,7 @@ FYI the naming is a real struggle for me here. I spent literally like 2 days thi
   - If you derive your components from `SubscriptionHelperMonoBehaviour` instead of `MonoBehaviour`, you can add subscriptions easily by invoking the `AddSubscription()` method.
   - This automatically handles all subscription-related responsibilities, i.e. unsubscribing in `OnDisable()`, resubscribing in `OnEnable()`, and again unsubscribing in `OnDestroy()`.
   - Supports all data types automatically, including your own custom made types which derive from `GameEvent<T>` or `GameState<T>`.
+  - (Still need to refactor this, because it uses closing/allocating lambdas currently.)
   
 ### Built-in, ready to use generic MonoBehaviour components
   - I included plenty of `MonoBehaviour` components I made over the last few weeks for myself; generally these are:
