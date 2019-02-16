@@ -6,10 +6,10 @@ namespace LeakyAbstraction.ReactiveScriptables
 {
     /// <summary>
     /// Generic base class for concrete classes that store state and provide change notifications.
-    /// Concrete GameState types has to be derived from this class, because the Unity Editor doesn't support generic classes.
-    /// T is the type of the state stored, and the type of the event payload.
+    /// Concrete GameProperty types has to be derived from this class, because the Unity Editor doesn't support generic classes.
+    /// T is the type of the data stored, also the type of the event payload.
     /// </summary>
-    public abstract class GameState<T> : ScriptableObject, IEventSource<T>
+    public abstract class GameProperty<T> : ScriptableObject, IEventSource<T>
     {
         protected virtual void Set(T t)
             => SetAndNotify(t);

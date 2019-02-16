@@ -3,6 +3,6 @@
 namespace LeakyAbstraction.ReactiveScriptables
 {
     [CreateAssetMenu]
-    public class ColorState : GameState<Color>
+    public class ColorProperty : GameProperty<Color>
     { }
 }

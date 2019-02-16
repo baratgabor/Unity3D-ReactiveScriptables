@@ -2,7 +2,6 @@
 
 namespace LeakyAbstraction.ReactiveScriptables
 {
-    [CreateAssetMenu]
-    public class BoundsState : GameState<Bounds>
+    public class Vector3Property : GameProperty<Vector3>
     { }
 }

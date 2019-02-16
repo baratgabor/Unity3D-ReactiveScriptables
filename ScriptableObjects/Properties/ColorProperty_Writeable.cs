@@ -3,7 +3,7 @@
 namespace LeakyAbstraction.ReactiveScriptables
 {
     [CreateAssetMenu]
-    public class ColorState_Writeable : ColorState
+    public class ColorProperty_Writeable : ColorProperty
     {
         new public void Set(Color value)
             => SetAndNotify(value);

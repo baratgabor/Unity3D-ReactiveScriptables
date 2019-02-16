@@ -5,7 +5,7 @@ using UnityEngine;
 namespace LeakyAbstraction.ReactiveScriptables
 {
     [CreateAssetMenu]
-    public class IntState_Writeable : IntState
+    public class IntProperty_Writeable : IntProperty
     {
         new public void Set(int value)
             => SetAndNotify(value);

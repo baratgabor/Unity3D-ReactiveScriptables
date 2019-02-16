@@ -3,6 +3,6 @@
 namespace LeakyAbstraction.ReactiveScriptables
 {
     [CreateAssetMenu]
-    public class FloatState : GameState<float>
+    public class BoundsProperty : GameProperty<Bounds>
     { }
 }

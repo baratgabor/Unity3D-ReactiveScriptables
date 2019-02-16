@@ -2,9 +2,10 @@
 
 namespace LeakyAbstraction.ReactiveScriptables
 {
-    public class Vector3State_Writeable : Vector3State
+    [CreateAssetMenu]
+    public class FloatProperty_Writeable : FloatProperty
     {
-        new public void Set(Vector3 value)
+        new public void Set(float value)
             => SetAndNotify(value);
     }
 }

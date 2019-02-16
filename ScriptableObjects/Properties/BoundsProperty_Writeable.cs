@@ -3,9 +3,9 @@
 namespace LeakyAbstraction.ReactiveScriptables
 {
     [CreateAssetMenu]
-    public class FloatState_Writeable : FloatState
+    public class BoundsProperty_Writeable : BoundsProperty
     {
-        new public void Set(float value)
+        new public void Set(Bounds value)
             => SetAndNotify(value);
     }
 }
