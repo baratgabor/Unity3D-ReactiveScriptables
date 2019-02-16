@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace LeakyAbstraction.ReactiveScriptables
 {
-    public class GameDistanceTracker : MonoBehaviour
+    public class GameDistanceTracker : SubscriptionHelperMonoBehaviour
     {
         [SerializeField]
-        private FloatState _gameScrollingSpeed = default;
+        private FloatProperty _speedInput = default;
         [SerializeField]
-        private FloatState_Writeable _gameDistanceOut = default;
+        private FloatProperty_Writeable _distanceOutput = default;
 
         [SerializeField]
         private GameEvent _startGameEvent = default;
@@ -22,39 +22,33 @@ namespace LeakyAbstraction.ReactiveScriptables
 
         private bool _tracking;
 
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (GUI.changed)
+                AddSubscriptions();
+        }
+#endif
+
         private void Start()
         {
-            _gameDistanceOut.Set(0);
+            if (_speedInput == null)
+                Debug.LogException(new Exception("Speed input dependency not assigned."));
 
-            if (AnyNull(_gameScrollingSpeed, _gameDistanceOut, _startGameEvent, _stopGameEvent))
-                throw new Exception("Component failed: Dependencies not set.");
+            if (_distanceOutput == null)
+                Debug.LogException(new Exception("Distance output dependency not assigned."));
+
+            _distanceOutput.Set(0);
+
+            AddSubscriptions();
         }
 
-        private bool AnyNull(params object[] values)
+        private void AddSubscriptions()
         {
-            foreach (var v in values)
-                if (v == null)
-                    return true;
-
-            return false;
-        }
-
-        private void OnEnable()
-        {
-            _startGameEvent.Event += EnableTracking;
-            _unpauseGameEvent.Event += EnableTracking;
-
-            _stopGameEvent.Event += DisableTracking;
-            _pauseGameEvent.Event += DisableTracking;
-        }
-
-        private void OnDisable()
-        {
-            _startGameEvent.Event -= EnableTracking;
-            _unpauseGameEvent.Event -= EnableTracking;
-
-            _stopGameEvent.Event -= DisableTracking;
-            _pauseGameEvent.Event -= DisableTracking;
+            AddSubscription(_startGameEvent, EnableTracking);
+            AddSubscription(_unpauseGameEvent, EnableTracking);
+            AddSubscription(_stopGameEvent, DisableTracking);
+            AddSubscription(_pauseGameEvent, DisableTracking);
         }
 
         private void EnableTracking(GameEvent sender)
@@ -66,7 +60,7 @@ namespace LeakyAbstraction.ReactiveScriptables
         private void Update()
         {
             if (_tracking)
-                _gameDistanceOut.Set(_gameDistanceOut.Get() + Mathf.Abs(_gameScrollingSpeed.Get() * Time.deltaTime));
+                _distanceOutput.Set(_distanceOutput.Get() + Mathf.Abs(_speedInput.Get() * Time.deltaTime));
         }
     }
 }
