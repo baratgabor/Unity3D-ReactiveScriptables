@@ -5,7 +5,7 @@ using UnityEngine;
 namespace LeakyAbstraction.ReactiveScriptables
 {
     /// <summary>
-    /// MonoBehaviour extension with helper features for subcribing to and unsubscribing from ScriptableObject-based GameEvent and GameState objects.
+    /// MonoBehaviour extension with helper features for subcribing to and unsubscribing from ScriptableObject-based GameEvent and GameProperty objects.
     /// </summary>
     public abstract class SubscriptionHelperMonoBehaviour : MonoBehaviour
     {
@@ -25,24 +25,24 @@ namespace LeakyAbstraction.ReactiveScriptables
         /// <summary>
         /// Subscribes to a GameEvent, and handles all relevant responsibilities, i.e. automatically suspends subscription while the GameObject is disabled.
         /// </summary>
-        /// <param name="gameState">The GameEvent to subscribe to.</param>
+        /// <param name="gameEvent">The GameEvent to subscribe to.</param>
         /// <param name="callback">The method to be called when the event fires.</param>
         protected void AddSubscription<T>(GameEvent<T> gameEvent, Action<T> callback)
             => AddSubscription_internal(gameEvent, callback, null);
 
         /// <summary>
-        /// Subscribes to a GameState, and handles all relevant responsibilities, i.e. automatically suspends subscription while the GameObject is disabled.
+        /// Subscribes to a GameProperty, and handles all relevant responsibilities, i.e. automatically suspends subscription while the GameObject is disabled.
         /// </summary>
-        /// <param name="gameState">The GameState to subscribe to.</param>
+        /// <param name="gameProperty">The GameProperty to subscribe to.</param>
         /// <param name="callback">The method to be called when the change notification event fires.</param>
-        /// <param name="resumeBehaviour">'Push' means the current state will be instantly sent when the GameObject becomes enabled after it was disabled. Can be useful for making sure that the component is up to date with the current game state.
-        protected void AddSubscription<T>(GameState<T> gameState, Action<T> callback, Resume resumeBehaviour)
+        /// <param name="resumeBehaviour">'Push' means the current value will be instantly sent when the GameObject becomes enabled after it was disabled. Can be useful for making sure that the component is up to date with the current game state.
+        protected void AddSubscription<T>(GameProperty<T> gameProperty, Action<T> callback, Resume resumeBehaviour)
         {
             Action pushAction = null;
             if (resumeBehaviour == Resume.Push)
-                pushAction = () => callback(gameState.Get());
+                pushAction = () => callback(gameProperty.Get());
 
-            AddSubscription_internal(gameState, callback, pushAction);
+            AddSubscription_internal(gameProperty, callback, pushAction);
         }
 
         private void AddSubscription_internal<T>(IEventSource<T> eventSource, Action<T> callback, Action pushAction)
@@ -75,10 +75,9 @@ namespace LeakyAbstraction.ReactiveScriptables
         }
 
         /// <summary>
-        /// Entirely removes the subscription to a given GameState or GameEvent.
+        /// Entirely removes the subscription to a given GameProperty or GameEvent.
         /// Don't use it for OnDisable/OnEnable safety; this functionality is automatic.
         /// </summary>
-        /// <param name="gameState"></param>
         protected void RemoveSubscription<T>(IEventSource<T> eventSource)
             => RemoveSubscription_internal(eventSource);
 
@@ -110,8 +109,27 @@ namespace LeakyAbstraction.ReactiveScriptables
             _actionSets[indexToRemoveAt].Unsubscribe();
 
             // Remove records
-            _actionSets.RemoveAt(indexToRemoveAt); // Not performant on List, but the assumption is that Count is small and invokations are rare.
-            _indexMap.Remove(keyObject);
+            // TODO: Refactor this synched removal, and/or change storage design
+            {
+                _indexMap.Remove(keyObject);
+
+                // If item is last, simply remove it
+                var lastListIndex = _actionSets.Count - 1;
+                if (indexToRemoveAt == lastListIndex)
+                    _actionSets.RemoveAt(indexToRemoveAt);
+                else
+                {
+                    // If item is not last, copy the last item to its place
+                    var lastItem = _actionSets[lastListIndex];
+                    _actionSets[indexToRemoveAt] = lastItem;
+
+                    // Update the Dictionary record of the moved item
+                    _indexMap[lastItem] = indexToRemoveAt;
+
+                    // Now the deletable item is the last item; remove it
+                    _actionSets.RemoveAt(lastListIndex);
+                }
+            }
         }
 
         private void ResumeSubscriptions()
