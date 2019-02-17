@@ -67,7 +67,7 @@ The common scenario of item pickups (e.g. coins in platformers), or projectile i
 
 **Key characteristics:**
 
-  - Requires more work and understanding to set up first.
+  - Requires more work and understanding to set up first. But, after the initial setup it's easy to use for non-programmers, because many aspects of game logic are Editor-declarable and -configurable.
   - The `GameObject` has a single responsibility, and the other components which subscribe to this event take care of their own relevant responsibility.
   - The number of components on each `GameObject` instances can be minimized; often even `ParticleSystems` and `AudioSources` can be removed and handled in a separate single component which is responsible for reacting to events at world coordinates.
   - Your `GameObjects` and prefabs can remain very simple, even in a game that is highly polished with dozens of various audio/visual/UI reactions to events.
