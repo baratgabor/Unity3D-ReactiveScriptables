@@ -35,7 +35,7 @@ This is used as a Git submodule in my project; in 2-3 classes I still need to wo
 
 ## Example Usage Scenario: Handling item pickups / projectile impacts
 
-The common scenario of item pickups (e.g. coins in platformers), or projectile impacts in 3D games. This often requires triggering `ParticleSystems`, `AudioSources`, and updating game statics / UI, especially in more polished projects.
+The common scenario of item pickups (e.g. coins in platformers), or projectile impacts in 3D games. This often requires triggering `ParticleSystems`, `AudioSources`, and updating game statistics / UI, especially in more polished projects.
 
 ### • Simplistic Unity-approach:
  
