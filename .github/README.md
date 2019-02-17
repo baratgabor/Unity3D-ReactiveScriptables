@@ -33,6 +33,45 @@ This is used as a Git submodule in my project; in 2-3 classes I still need to wo
   - Highly complex games, because the data types are really fine-grained, and if you need to create hundreds of them, that would probably get messy. However, you can easily extend this system with your own, less fine grained types.
   - Scenarios where you need to create and propagate state dynamically, since this is all about using pre-defined `ScriptableObject` instances. Of course in a lot of cases what you actually need is to hook the components onto a communication channel, and these channels are usually pre-definable.
 
+## Example Usage Scenario: Handling item pickups / projectile impacts
+
+The common scenario of item pickups (e.g. coins in platformers), or projectile impacts in 3D games. This often requires triggering `ParticleSystems`, `AudioSources`, and updating game statics / UI, especially in more polished projects.
+
+### • Simplistic Unity-approach:
+ 
+![GitHub Logo](/.github/ExampleScenario1-Simplistic.png)
+ 
+**Workflow:** 
+
+  - You add a `ParticleSystem` and an `AudioSource` component directly to your `GameObject`.
+  - You reference various other components via e.g. singletons, and directly call methods on them.
+  - You hide the `GameObject`'s renderer, and destroy/disable the `GameObject` in a delayed manner.
+
+**Key characteristics:**
+
+  - Very simple and easy to learn approach, which doesn't require any framework, or understanding of software architecture.
+  - The `GameObject` itself assumes responsibility for everything that needs to happen when it's triggered or collided into.
+  - Many components, e.g. `ParticleSystems` and `AudioSources`, are duplicated on each `GameObject` instance.  
+  - Even simple `GameObjects` and prefabs start to feel tangled and bloated as you add more polish to the game and include particle effects, sounds, UI updates, game statistics, etc.    
+
+### • ScriptableObject-based event-driven approach:
+
+![GitHub Logo](/.github/ExampleScenario1-EventDriven.png)
+
+**Workflow:**
+
+  - *(Required only first time)* You create a `struct` or `class` that will contain all the data relevant to your event (or skip this, and just use a primitive type, if that's enough).
+  - *(Required only first time)* You create a `ScriptableObject`-based asset that will serve as an Editor-assignable send/receive channel for your event data.
+  - You assign this created `ScriptableObject`-based communication asset to all your `GameObject` script (as *invokable*), and to all other components that want to listen and react (as *readonly*).
+  - Your script simply invokes the event, which notifies all subscribers.
+
+**Key characteristics:**
+
+  - Requires more work and understanding to set up first.
+  - The `GameObject` has a single responsibility, and the other components which subscribe to this event take care of their own relevant responsibility.
+  - The number of components on each `GameObject` instances can be minimized; often even `ParticleSystems` and `AudioSources` can be removed and handled in a separate single component which is responsible for reacting to events at world coordinates.
+  - Your `GameObjects` and prefabs can remain very simple, even in a game that is highly polished with dozens of various audio/visual/UI reactions to events.
+
 ## Main Features
 
 ### Differentiated read-only and writeable use
