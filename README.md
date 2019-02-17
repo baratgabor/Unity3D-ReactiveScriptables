@@ -17,6 +17,10 @@ This is used as a Git submodule in my project; in 2-3 classes I still need to wo
 
 *(FYI the naming is a real struggle for me here. I spent literally like 2 days thinking about how to call this module, plus how to call the state holding class, etc. I didn't like the original GameVariable name, and I wanted to differentiate its use from the normal variables/fields we use (that's why I also went with `Get()` and `Set()` instead of property accessors). So it's entirely possible that I'll rename a bunch of things.)*
 
+### Main selling point:
+
+  - Powerful Editor-configurability for teams with non-programmer workers, e.g. artists and designers. Because obviously it would be much easier to just use for example a message bus / event aggregator to send payloads to listeners.
+
 ### Suitable for:
 
   - Injecting pre-defined data or configuration into `MonoBehaviour` components.
