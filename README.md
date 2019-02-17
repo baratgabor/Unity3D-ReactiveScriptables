@@ -24,7 +24,7 @@ This is used as a Git submodule in my project; in 2-3 classes I still need to wo
 ### Suitable for:
 
   - Injecting pre-defined data or configuration into `MonoBehaviour` components.
-  - Exchanging pre-defined types of data between `MonoBehaviour` components, either through polling or notifications, without creating hard references between them.
+  - Exchanging pre-defined types of data between `MonoBehaviour` components, either through polling or event subscription, without creating hard references between them.
   - Creating reactive, or event-driven, workflow between components with events and change notifications. (But for now don't expect real reactive features, like map, filter, etc. ;))
   - Driving GUI behaviour and interactivity.
 
