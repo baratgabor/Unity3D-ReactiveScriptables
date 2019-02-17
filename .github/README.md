@@ -45,7 +45,7 @@ The common scenario of item pickups (e.g. coins in platformers), or projectile i
 
   - You add a `ParticleSystem` and an `AudioSource` component directly to your `GameObject`.
   - You reference various other components via e.g. singletons, Editor-associations or `GetComponent()`, and directly call methods on them.
-  - You hide the `GameObject`'s renderer, and destroy/disable the `GameObject` in a delayed manner (since the `ParticleSystem` and `AudioSource` still need to finish).
+  - On trigger/collision enter you hide the `GameObject`'s renderer, and destroy/disable the `GameObject` in a delayed manner (since the `ParticleSystem` and `AudioSource` still need to finish).
 
 **Key characteristics:**
 
