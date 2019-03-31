@@ -7,7 +7,7 @@
 
 ---
 
-**Sadly, this repo, like all my Unity3D repos, is sort of abandoned at the moment. I had plans expanding and polishing this scaffolding project, but the reality is that I had to start looking for an actual paying job, and Unity3D didn't seem like a viable option.**
+**Sadly, this repo, like all my Unity3D repos, is sort of abandoned at the moment. I had plans expanding and polishing this scaffolding project, to make it more feature-rich and intuitive to use for others, but the reality is that I had to start looking for an actual paying job, and Unity3D didn't seem like a viable option.**
 
 Essentially this is an adapted/extended version of the ScriptableObject-based architectural approach introduced in the Unite talk linked above.
 
