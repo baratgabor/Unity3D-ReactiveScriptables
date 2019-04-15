@@ -19,8 +19,8 @@ namespace LeakyAbstraction.ReactiveScriptables
             NoPush
         }
 
-        private List<(Action Subscribe, Action Unsubscribe, Action Push)> _actionSets = new List<(Action, Action, Action)>();
-        private Dictionary<object, int> _indexMap = new Dictionary<object, int>();
+        //private List<(Action Subscribe, Action Unsubscribe, Action Push)> _actionSets = new List<(Action, Action, Action)>();
+        private Dictionary<object, (Action Subscribe, Action Unsubscribe, Action Push)> _actionMap = new Dictionary<object, (Action Subscribe, Action Unsubscribe, Action Push)>();
 
         /// <summary>
         /// Subscribes to a GameEvent, and handles all relevant responsibilities, i.e. automatically suspends subscription while the GameObject is disabled.
@@ -54,23 +54,22 @@ namespace LeakyAbstraction.ReactiveScriptables
                 return;
             }
 
-            // Return if already subscribed
-            if (_indexMap.ContainsKey(eventSource))
+            // Already subscribed to given event source
+            if (_actionMap.ContainsKey(eventSource))
                 return;
 
-            // Subscribe immediately
             eventSource.Event += callback;
 
             // Store actions for subsequent subscription suspend and resume
             {
-                //TODO: Factor out closure allocations, ideally :D
-                _actionSets.Add((
-                    Subscribe: () => eventSource.Event += callback,
-                    Unsubscribe: () => eventSource.Event -= callback,
-                    Push: pushAction
-                ));
-
-                _indexMap.Add(eventSource, _actionSets.Count - 1);
+                _actionMap.Add(
+                    key: eventSource,
+                    value:
+                        //TODO: Factor out closure allocations, ideally
+                        (Subscribe: () => eventSource.Event += callback,
+                        Unsubscribe: () => eventSource.Event -= callback,
+                        Push: pushAction)
+                );
             }
         }
 
@@ -99,52 +98,29 @@ namespace LeakyAbstraction.ReactiveScriptables
         protected virtual void OnDestroy()
             => UnsubscribeAll(); // No need for record removal, right? It will be destroyed after all.
 
-        private void RemoveSubscription_internal(object keyObject)
+        private void RemoveSubscription_internal(object key)
         {
-            if (!_indexMap.TryGetValue(keyObject,
-                out int indexToRemoveAt)) // Out
+            if (!_actionMap.TryGetValue(key,
+                out var actionSet)) // Out
                 return;
 
-            // Unsubscribe first
-            _actionSets[indexToRemoveAt].Unsubscribe();
-
-            // Remove records
-            // TODO: Refactor this synched removal, and/or change storage design
-            {
-                _indexMap.Remove(keyObject);
-
-                // If item is last, simply remove it
-                var lastListIndex = _actionSets.Count - 1;
-                if (indexToRemoveAt == lastListIndex)
-                    _actionSets.RemoveAt(indexToRemoveAt);
-                else
-                {
-                    // If item is not last, copy the last item to its place
-                    var lastItem = _actionSets[lastListIndex];
-                    _actionSets[indexToRemoveAt] = lastItem;
-
-                    // Update the Dictionary record of the moved item
-                    _indexMap[lastItem] = indexToRemoveAt;
-
-                    // Now the deletable item is the last item; remove it
-                    _actionSets.RemoveAt(lastListIndex);
-                }
-            }
+            actionSet.Unsubscribe();
+            _actionMap.Remove(key);
         }
 
         private void ResumeSubscriptions()
         {
-            foreach (var a in _actionSets)
+            foreach (var e in _actionMap) // Iterate over KVPs instead of .Values to avoid heap allocation of ValueCollection
             {
-                a.Subscribe();
-                a.Push?.Invoke(); // Push delegate is non-null only if push was specifically requested at subscription
+                e.Value.Subscribe();
+                e.Value.Push?.Invoke(); // Push delegate is non-null only if push was specifically requested at subscription
             }
         }
 
         private void UnsubscribeAll()
         {
-            foreach (var a in _actionSets)
-                a.Unsubscribe();
+            foreach (var e in _actionMap)
+                e.Value.Unsubscribe();
         }
     }
 }
